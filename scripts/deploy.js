@@ -29,21 +29,30 @@
 // });
 
 const main = async () => {
-  const nftContractFactory = await hre.ethers.getContractFactory('MyEpicNFT');
-  const nftContract = await nftContractFactory.deploy();
+  const nftContractFactory = await hre.ethers.getContractFactory('Vingo');
+  const nftContract = await nftContractFactory.deploy(
+    "Tester",
+    "TESTSTS",
+    "0xD149b3b88b4Ca9cb9a174a95f2EE492a80AC0EC3",
+    "0x1260443F80a91eA400B055D8825D6a99ee8b81A2"
+  );
   await nftContract.deployed();
   console.log("Contract deployed to:", nftContract.address);
 
+//   txn = await nftContract.makeAnEpicNFT()
+//   // Wait for it to be mined.
+//   await txn.wait()
+//   console.log("Minted NFT #2")
   // Call the function.
-  let txn = await nftContract.makeAnEpicNFT()
+//   let txn = await nftContract.purchaseFreeOfCharge("0x1260443F80a91eA400B055D8825D6a99ee8b81A2", 10)
+//   let txn1 = await nftContract.mintPublic("0x1260443F80a91eA400B055D8825D6a99ee8b81A2")
+  let txn1 = await nftContract.mintPublic("0x1260443F80a91eA400B055D8825D6a99ee8b81A2")
+//   let txn2 = await nftContract.buy()
   // Wait for it to be mined.
-  await txn.wait()
-  console.log("Minted NFT #1")
+  await txn1.wait()
+  console.log(txn1.toString())
+  console.log("Purchased NFT #1")
 
-  txn = await nftContract.makeAnEpicNFT()
-  // Wait for it to be mined.
-  await txn.wait()
-  console.log("Minted NFT #2")
 };
 
 const runMain = async () => {
