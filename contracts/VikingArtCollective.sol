@@ -7,12 +7,14 @@ import "@divergencetech/ethier/contracts/sales/FixedPriceSeller.sol";
 import "@openzeppelin/contracts/token/common/ERC2981.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "hardhat/console.sol";
 
 /// @title Viking Art Collective NFT
 /// @author @odentorp
-contract Vingo is ERC721ACommon, BaseTokenURI, ERC2981, FixedPriceSeller {
+contract VikingArtCollective is ERC721ACommon, BaseTokenURI, ERC2981, FixedPriceSeller {
     using Strings for uint256;
+
+    mapping(address => uint256) TokenQuota;
+    mapping(address => uint256) TokensPurchased;
 
     constructor(
         string memory name,
@@ -24,15 +26,12 @@ contract Vingo is ERC721ACommon, BaseTokenURI, ERC2981, FixedPriceSeller {
     BaseTokenURI("")
     FixedPriceSeller(
         0.0001 ether,
-        // How to white list mints?
-        // TODO(odentorp): freeQuota is not working as expected. I was able to mint 5 NFTs even though freeQuota is 2. Similarly, totalInventory is 3, but I was able to mint 5.
-        // These issues to be fixed in a separate PR.
         Seller.SellerConfig({
             totalInventory: 100,
             maxPerAddress: 0,
             maxPerTx: 0,
             freeQuota: 10,
-            lockFreeQuota: false, // can update quota if needed
+            lockFreeQuota: false,
             reserveFreeQuota: true,
             lockTotalInventory: true
         }),
@@ -90,7 +89,6 @@ contract Vingo is ERC721ACommon, BaseTokenURI, ERC2981, FixedPriceSeller {
         address to
     ) external payable {
         require(publicMinting, "Public minting closed");
-        console.log(_baseURI());
         _purchase(to, 1);
     }
 
