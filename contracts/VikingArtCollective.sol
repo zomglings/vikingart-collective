@@ -89,6 +89,10 @@ contract VikingArtCollective is ERC721ACommon, BaseTokenURI, ERC2981, FixedPrice
         publicMinting = _publicMinting;
     }
 
+    function isMintPublic() external view returns (bool) {
+        return publicMinting;
+    }
+
     /**
     @dev Public minting method only available when public minting is enabled
     */
