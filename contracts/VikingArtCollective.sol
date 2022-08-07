@@ -13,8 +13,6 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 contract VikingArtCollective is ERC721ACommon, BaseTokenURI, ERC2981, FixedPriceSeller {
     using Strings for uint256;
 
-    mapping(address => uint256) TokenQuota;
-    mapping(address => uint256) TokensPurchased;
     mapping(address => bool) Whitelist;
     /**
     @notice Flag indicating that public minting is open.
